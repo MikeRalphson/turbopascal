@@ -22,6 +22,9 @@ define(["Stream", "Token", "Lexer", "CommentStripper", "Parser",
         // The file being edited/run.
         this.workFile = "";
 
+        // The output filename
+        this.mainFile = "";
+
         // Where keyboard input goes.
         this.inputMode = INPUT_MENU;
 
@@ -87,7 +90,7 @@ define(["Stream", "Token", "Lexer", "CommentStripper", "Parser",
 
         this.screen.printBold("M");
         this.screen.print("ain file: ");
-        this.screen.printBold("");
+        this.screen.printBold(this.mainFile);
         this.screen.newLine();
 
         this.screen.newLine();
@@ -201,6 +204,14 @@ define(["Stream", "Token", "Lexer", "CommentStripper", "Parser",
                 this._run();
                 break;
 
+            case "C":
+                this._run('compile');
+                break;
+
+            case "S":
+                this._run('save');
+                break;
+
             case "W":
                 this._workFile();
                 break;
@@ -213,11 +224,15 @@ define(["Stream", "Token", "Lexer", "CommentStripper", "Parser",
                 this.screen.print("Command ");
                 this.screen.printBold(ch);
                 this.screen.print(" is not implemented. Try ");
+                this.screen.printBold("C");
+                this.screen.print(", ");
                 this.screen.printBold("D");
                 this.screen.print(", ");
                 this.screen.printBold("E");
                 this.screen.print(", ");
                 this.screen.printBold("R");
+                this.screen.print(", ");
+                this.screen.printBold("S");
                 this.screen.print(", ");
                 this.screen.printBold("W");
                 this.screen.print(", or ");
@@ -260,7 +275,7 @@ define(["Stream", "Token", "Lexer", "CommentStripper", "Parser",
     };
 
     // Run the program.
-    IDE.prototype._run = function () {
+    IDE.prototype._run = function (mode) {
         var self = this;
 
         if (this.source === "") {
@@ -300,35 +315,45 @@ define(["Stream", "Token", "Lexer", "CommentStripper", "Parser",
                 var output = bytecode.print();
                 $("#bytecode").text(output);
             }
+            this.mainFile = this.workFile.replace('.PAS','.P');
 
-            // Execute the bytecode.
-            var machine = new Machine(bytecode, this.keyboard);
-            var $state = $("#state");
-            if (DEBUG_TRACE) {
-                machine.setDebugCallback(function (state) {
-                    $state.append(state + "\n");
+            if (!mode || mode === 'run') {
+                // Execute the bytecode.
+                var machine = new Machine(bytecode, this.keyboard);
+                var $state = $("#state");
+                if (DEBUG_TRACE) {
+                    machine.setDebugCallback(function (state) {
+                        $state.append(state + "\n");
+                    });
+                }
+                machine.setFinishCallback(function (runningTime) {
+                    /// console.log("Finished program: " + runningTime + "s");
+                    $("#canvas").hide();
+                    $("#screen").show();
+                    self.printPrompt();
                 });
+                machine.setOutputCallback(function (line) {
+                    self.screen.print(line);
+                    self.screen.newLine();
+                });
+                machine.setInputCallback(function (callback) {
+                    self.screen.addCursor();
+                    self._setInputMode(INPUT_STRING, function (line) {
+                        self._setInputMode(INPUT_RUNNING);
+                        callback(line);
+                    });
+                });
+                this._setInputMode(INPUT_RUNNING);
+                machine.run();
             }
-            machine.setFinishCallback(function (runningTime) {
-                /// console.log("Finished program: " + runningTime + "s");
-                $("#canvas").hide();
-                $("#screen").show();
-                self.printPrompt();
-            });
-            machine.setOutputCallback(function (line) {
-                self.screen.print(line);
-                self.screen.newLine();
-            });
-            machine.setInputCallback(function (callback) {
-                self.screen.addCursor();
-                self._setInputMode(INPUT_STRING, function (line) {
-                    self._setInputMode(INPUT_RUNNING);
-                    callback(line);
-                });
-            });
+            else {
+                this.screen.print("Compiling");
+                this.screen.newLine();
+                this.screen.print("  "+this.source.split('\n').length+" lines");
+                this.screen.newLine();
+                this.printPrompt();
+            }
 
-            this._setInputMode(INPUT_RUNNING);
-            machine.run();
         } catch (e) {
             // Print parsing errors.
             if (e instanceof PascalError) {
@@ -358,6 +383,7 @@ define(["Stream", "Token", "Lexer", "CommentStripper", "Parser",
                 self.printPrompt();
             } else {
                 self.workFile = workFile;
+                self.mainFile = "";
 
                 $.ajax('src/'+workFile, {
                     dataType: "text",
