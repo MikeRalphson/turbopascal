@@ -8,7 +8,7 @@ define(["Stream", "Token", "Lexer", "CommentStripper", "Parser",
     // Available source files.
     var FILES = [
         // "TEST.PAS",
-        "FIREWORK.PAS",
+        "BLAKJACK.PAS",
         "FASTMAND.PAS",
         "SPIDER.PAS",
         "BSPLINE.PAS",
