@@ -818,6 +818,8 @@ define(["Token", "Node", "PascalError", "inst", "SymbolTable", "Symbol", "module
             // the program, since you'll see the full type everywhere, but will
             // simplify the compilation step.
             node = symbolLookup.symbol.type;
+        } else if (token.isSymbol('(')) {
+            throw new PascalError(token, "enumerated types not yet implemented");
         } else {
             throw new PascalError(token, "can't parse type");
         }
