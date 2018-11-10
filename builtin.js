@@ -20,6 +20,8 @@ define(["Node", "Token", "inst"], function (Node, Token, inst) {
             symbolTable.addNativeType("String", Node.stringType);
             symbolTable.addNativeType("Integer", Node.integerType);
             symbolTable.addNativeType("ShortInt", Node.integerType);
+            symbolTable.addNativeType("Byte", Node.integerType);
+            symbolTable.addNativeType("Word", Node.integerType);
             symbolTable.addNativeType("LongInt", Node.integerType);
             symbolTable.addNativeType("Char", Node.charType);
             symbolTable.addNativeType("Boolean", Node.booleanType);
