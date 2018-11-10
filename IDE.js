@@ -367,7 +367,7 @@ define(["Stream", "Token", "Lexer", "CommentStripper", "Parser",
             } else {
                 self.workFile = workFile;
 
-                $.ajax(workFile, {
+                $.ajax('src/'+workFile, {
                     dataType: "text",
                     isLocal: true,
                     error: function () {
