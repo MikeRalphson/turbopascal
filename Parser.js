@@ -818,6 +818,14 @@ define(["Token", "Node", "PascalError", "inst", "SymbolTable", "Symbol", "module
             // the program, since you'll see the full type everywhere, but will
             // simplify the compilation step.
             node = symbolLookup.symbol.type;
+
+            // Strings with defined lengths
+            var nToken = this.lexer.peek();
+            if (nToken.isSymbol("[")) {
+                var ob = this.lexer.next();
+                var len = this.lexer.next();
+                this._expectSymbol("]");
+            }
         } else if (token.isSymbol('(')) {
             var entries = [];
             do {

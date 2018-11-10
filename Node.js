@@ -373,7 +373,9 @@ define(["inst", "PascalError", "Token", "utils"], function (inst, PascalError, T
                 // They all have the same size.
                 size = 1;
                 break;
-            /// case Node.ENUM_TYPE:
+            case Node.ENUM_TYPE:
+                size = this.entries.length; //?
+                break;
             case Node.RECORD_TYPE:
                 size = 0;
                 for (var i = 0; i < this.fields.length; i++) {
