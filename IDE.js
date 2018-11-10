@@ -5,17 +5,6 @@ define(["Stream", "Token", "Lexer", "CommentStripper", "Parser",
         function (Stream, Token, Lexer, CommentStripper,
                   Parser, PascalError, Compiler, Machine, SymbolTable, utils, $) {
 
-    // Available source files.
-    var FILES = [
-        // "TEST.PAS",
-        "ALBION.PAS",
-        "BLAKJACK.PAS",
-        "SPIDER.PAS",
-        "BSPLINE.PAS",
-        "ROSE.PAS",
-        "HELLO.PAS"
-    ];
-    FILES.sort();
 
     // Input modes. This determines what happens to keyboard input.
     var INPUT_MENU = 0;
@@ -23,9 +12,12 @@ define(["Stream", "Token", "Lexer", "CommentStripper", "Parser",
     var INPUT_RUNNING = 2;
     var INPUT_EDITOR = 3;
 
-    var IDE = function (screen, keyboard) {
+    var IDE = function (screen, keyboard, files) {
         this.screen = screen;
         this.keyboard = keyboard;
+
+        FILES = files;
+        FILES.sort();
 
         // The file being edited/run.
         this.workFile = "";

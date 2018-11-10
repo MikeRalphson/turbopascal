@@ -14,6 +14,19 @@ require(["jquery", "Screen", "Keyboard", "IDE"], function ($, Screen, Keyboard, 
     var $screen = $("#screen");
     var screen = new Screen($screen);
     var keyboard = new Keyboard();
-    var ide = new IDE(screen, keyboard);
-    ide.printMenu();
+    $.ajax('./files.json',{
+        dataType: "json",
+        isLocal: true,
+        error: function (e) {
+            var ide = new IDE(screen, keyboard, []);
+            ide.printMenu();
+            ide.screen.printBold("File can't be loaded: " + workFile);
+            ide.screen.newLine();
+            ide.printPrompt();
+        },
+        success: function (files) {
+            var ide = new IDE(screen, keyboard, files);
+            ide.printMenu();
+        }
+    });
 });
