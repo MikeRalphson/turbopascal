@@ -819,7 +819,18 @@ define(["Token", "Node", "PascalError", "inst", "SymbolTable", "Symbol", "module
             // simplify the compilation step.
             node = symbolLookup.symbol.type;
         } else if (token.isSymbol('(')) {
-            throw new PascalError(token, "enumerated types not yet implemented");
+            var entries = [];
+            do {
+                var entry = this._expectIdentifier("expected enumeration entry");
+                entries.push(entry);
+            } while (this._moreToCome(",", ")"));
+            this._expectSymbol(")");
+            node = new Node(Node.ENUM_TYPE, token, {
+                typeCode: inst.I,
+                typeName: new Node(Node.IDENTIFIER, typeNameToken),
+                type: type,
+                entries: entries
+            });
         } else {
             throw new PascalError(token, "can't parse type");
         }
