@@ -831,6 +831,13 @@ define(["Token", "Node", "PascalError", "inst", "SymbolTable", "Symbol", "module
             do {
                 var entry = this._expectIdentifier("expected enumeration entry");
                 entries.push(entry);
+                console.log('Defining enum value',entry.value);
+                var eNode = new Node(Node.CONST, null, {
+                    name: entry.value,
+                    type: inst.I,
+                    value: entries.length
+                });
+                symbolTable.addSymbol(entry.value,eNode.nodeType, eNode.type);
             } while (this._moreToCome(",", ")"));
             this._expectSymbol(")");
             node = new Node(Node.ENUM_TYPE, token, {
