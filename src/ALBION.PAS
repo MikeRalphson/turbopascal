@@ -23,7 +23,7 @@ type
   birthdate:word;
   alive:boolean;
  end;
- playerfile=file of person;
+ {playerfile=file of person;}
 
 const
  sex:array [male..female] of string[6]=('Male','Female');
@@ -75,7 +75,7 @@ end;
 
 var
  current:person;
- playfile:array [1..6] of playerfile;
+ {playfile:array [1..6] of playerfile;}
 
 begin
  randomize;
