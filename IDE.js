@@ -315,7 +315,6 @@ define(["Stream", "Token", "Lexer", "CommentStripper", "Parser",
                 var output = bytecode.print();
                 $("#bytecode").text(output);
             }
-            this.mainFile = this.workFile.replace('.PAS','.P');
 
             if (!mode || mode === 'run') {
                 // Execute the bytecode.
@@ -352,9 +351,18 @@ define(["Stream", "Token", "Lexer", "CommentStripper", "Parser",
                 this.screen.print("  "+this.source.split('\n').length+" lines");
                 this.screen.newLine();
                 this.printPrompt();
+                if (mode === 'save') {
+                  console.log('Saving');
+                  var fileContents = bytecode.print();
+                  var pp = document.createElement('a');
+                  pp.setAttribute('download', true);
+                  pp.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(fileContents));
+                  pp.click();
+                }
             }
 
         } catch (e) {
+            console.log(e.message);
             // Print parsing errors.
             if (e instanceof PascalError) {
                 console.log(e.getMessage());
@@ -383,7 +391,7 @@ define(["Stream", "Token", "Lexer", "CommentStripper", "Parser",
                 self.printPrompt();
             } else {
                 self.workFile = workFile;
-                self.mainFile = "";
+                self.mainFile = workFile.replace('.PAS','.P');
 
                 $.ajax('src/'+workFile, {
                     dataType: "text",
