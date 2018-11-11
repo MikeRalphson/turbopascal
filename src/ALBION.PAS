@@ -32,11 +32,15 @@ const
 function dice(number,sides:word):word;
 
 var
- temp,loop:word;
+ temp,loop,r:word;
 
 begin
  temp:=0;
- for loop:=1 to number do inc(temp,succ(random(sides)));
+ {for loop:=1 to number do inc(temp,succ(random(sides)));}
+ for loop:=1 to number do begin
+  r:=random(sides);  
+  inc(temp,succ(r));
+ end;
  dice:=temp;
 end;
 
