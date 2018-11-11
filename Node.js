@@ -288,7 +288,13 @@ define(["./inst", "./PascalError", "./Token", "./utils"], function (inst, Pascal
     // Given a RANGE node, returns the lower bound as a number.
     Node.prototype.getRangeLowBound = function () {
         if (this.nodeType === Node.RANGE) {
-            return this.low.getNumber();
+	    try {
+                return this.low.getNumber();
+            }
+            catch (ex) {
+                console.warn(JSON.stringify(this.low));
+                return this.low.token.value;
+            }
         } else {
             throw new PascalError(this.token, "expected a range");
         }
@@ -297,7 +303,13 @@ define(["./inst", "./PascalError", "./Token", "./utils"], function (inst, Pascal
     // Given a RANGE node, returns the high bound as a number.
     Node.prototype.getRangeHighBound = function () {
         if (this.nodeType === Node.RANGE) {
-            return this.high.getNumber();
+            try {
+                return this.high.getNumber();
+            }
+            catch (ex) {
+                console.warn(JSON.stringify(this.high));
+                return this.high.token.value;
+            }
         } else {
             throw new PascalError(this.token, "expected a range");
         }
@@ -409,6 +421,7 @@ define(["./inst", "./PascalError", "./Token", "./utils"], function (inst, Pascal
     Node.voidType = new Node(Node.SIMPLE_TYPE, null, {typeCode: inst.P});
     Node.realType = new Node(Node.SIMPLE_TYPE, null, {typeCode: inst.R});
     Node.stringType = new Node(Node.SIMPLE_TYPE, null, {typeCode: inst.S});
+    Node.recordType = new Node(Node.RECORD_TYPE, null, {typeCode: inst.X});
 
     // Fluid method to set the expression type.
     Node.prototype.withExpressionType = function (expressionType) {
@@ -705,7 +718,9 @@ define(["./inst", "./PascalError", "./Token", "./utils"], function (inst, Pascal
 
         // Must be the same type of node. Can't cast between node types
         // (e.g., array to set).
-        if (type.nodeType !== nodeType.nodeType) {
+	var allowed = (type.nodeType === nodeType.nodeType);
+	if (!allowed) allowed = ((type.nodeType === Node.SIMPLE_TYPE) && (nodeType.nodeType === Node.ENUM_TYPE));
+        if (!allowed) {
             throw new PascalError(this.token, "can't cast from " + nodeType.nodeType +
                                  " to " + type.nodeType);
         }

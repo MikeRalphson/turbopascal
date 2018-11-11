@@ -71,6 +71,11 @@ define(["./Node", "./Token", "./inst"], function (Node, Token, inst) {
                 ctl.writeDstore(v, ctl.readDstore(v) + dv);
             });
             symbol.type.parameters[0].byReference = true;
+            var symbol = symbolTable.addNativeFunction("Succ", Node.integerType,
+                [Node.integerType], function (ctl, v) {
+                ctl.writeDstore(v, ctl.readDstore(v) + 1);
+            });
+            symbol.type.parameters[0].byReference = true;
             symbolTable.addNativeFunction("WriteLn", Node.voidType, [], function (ctl) {
                 // Skip ctl parameter.
                 var elements = [];
@@ -125,6 +130,12 @@ define(["./Node", "./Token", "./inst"], function (Node, Token, inst) {
                 // Free p and store 0 (nil) into it.
                 ctl.free(ctl.readDstore(p));
                 ctl.writeDstore(p, 0);
+            });
+            symbol.type.parameters[0].byReference = true;
+            symbol = symbolTable.addNativeFunction("SizeOf", Node.integerType,
+                                          [Node.recordType],
+                                          function (ctl, p) {
+		return 1; // TODO
             });
             symbol.type.parameters[0].byReference = true;
         }

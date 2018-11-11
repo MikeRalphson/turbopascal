@@ -260,6 +260,7 @@ define(["./Token", "./Node", "./PascalError", "./inst", "./SymbolTable", "./Symb
 
             var low = type.ranges[d].getRangeLowBound();
             var high = type.ranges[d].getRangeHighBound();
+            console.warn('Range',low,high);
             for (var i = low; i <= high; i++) {
                 if (d === type.ranges.length - 1) {
                     // Parse the next constant.
@@ -300,7 +301,7 @@ define(["./Token", "./Node", "./PascalError", "./inst", "./SymbolTable", "./Symb
             var equalToken = this._expectSymbol("=");
 
             // Parse type.
-            var type = this._parseType(symbolTable, incompleteTypes);
+            var type = this._parseType(symbolTable, incompleteTypes, token.value);
 
             // Create the node.
             var node = new Node(Node.TYPE, equalToken, {
@@ -761,7 +762,7 @@ define(["./Token", "./Node", "./PascalError", "./inst", "./SymbolTable", "./Symb
     // The "incompleteTypes" array is optional. If specified, and if a pointer
     // to an unknown type is found, it is added to the array. If such a pointer
     // is found and the array was not passed in, we throw.
-    Parser.prototype._parseType = function (symbolTable, incompleteTypes) {
+    Parser.prototype._parseType = function (symbolTable, incompleteTypes, parentName) {
         var token = this.lexer.next();
         var node;
 
@@ -832,14 +833,16 @@ define(["./Token", "./Node", "./PascalError", "./inst", "./SymbolTable", "./Symb
             var entries = [];
             do {
                 var entry = this._expectIdentifier("expected enumeration entry");
-                entries.push(entry);
-                console.log('Defining enum value',entry.value);
-                var eNode = new Node(Node.CONST, null, {
+                console.log('Defining enum value',entry.value,entries.length);
+                var eNode = new Node(Node.CONST, entry, {
                     name: entry.value,
                     type: inst.I,
-                    value: entries.length
+                    value: entries.length,
+                    symbolTable: symbolTable // mike
                 });
-                symbolTable.addSymbol(entry.value,eNode.nodeType, eNode.type);
+                //symbolTable.addSymbol(entry.value,eNode.nodeType, eNode.type);
+		symbolTable.addNativeConstant(entry.value, entries.length, Node.integerType);
+                entries.push(entry);
             } while (this._moreToCome(",", ")"));
             this._expectSymbol(")");
             node = new Node(Node.ENUM_TYPE, token, {
@@ -848,6 +851,8 @@ define(["./Token", "./Node", "./PascalError", "./inst", "./SymbolTable", "./Symb
                 type: type,
                 entries: entries
             });
+            console.log('Defining enum length',parentName,entries.length);
+            symbolTable.addNativeConstant(parentName, entries.length, Node.integerType);
         } else {
             throw new PascalError(token, "can't parse type");
         }
@@ -928,8 +933,16 @@ define(["./Token", "./Node", "./PascalError", "./inst", "./SymbolTable", "./Symb
     // Parses a range, such as "5..10". Either can be a constant expression.
     Parser.prototype._parseRange = function (symbolTable) {
         var low = this._parseExpression(symbolTable);
-        var token = this._expectSymbol("..");
-        var high = this._parseExpression(symbolTable);
+        var next = this.lexer.peek();
+        if (next.value === "..") {
+	    var token = this.lexer.next();
+            //var token = this._expectSymbol("..");
+            var high = this._parseExpression(symbolTable);
+        }
+        else {
+            var high = low;
+            low = {getNumber: function() { return 0 }, value: 0};
+        }
 
         return new Node(Node.RANGE, token, {low: low, high: high});
     };
