@@ -15,7 +15,11 @@
     "url": "git+https://github.com/mikeralphson/turbopascal.git"
   },
   "keywords": [
-    "http"
+    "pascal",
+    "turbopascal",
+    "borland",
+    "ucsd",
+    "pcode"
   ],
   "contributors": [
     "Lawrence Kesteloot",
