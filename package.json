@@ -1,27 +1,38 @@
 {
-  "name": "arapaho",
+  "name": "turbopascal",
   "version": "1.0.0",
-  "description": "Micro HTTP server",
+  "description": "Turbo Pascal subset compiler and interpreter",
   "main": "tpc.js",
-  "bin": "turbo.js",
+  "bin": {
+    "turbopascal": "turbo.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node arapaho.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Mermade/arapaho.git"
+    "url": "git+https://github.com/mikeralphson/turbopascal.git"
   },
   "keywords": [
     "http"
   ],
-  "author": "Mike Ralphson",
-  "license": "BSD-3-Clause",
+  "contributors": [
+    "Lawrence Kesteloot",
+    "Mike Ralphson"
+  ],
+  "license": "BSD-2-Clause",
   "dependencies": {
     "amdefine": "^1.0.1",
     "compression": "^1.6.2",
     "ejs": "^2.5.1",
     "express": "^4.15.5",
     "underscore": "^1.9.1"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/mikeralphson/turbopascal/issues"
+  },
+  "homepage": "https://github.com/mikeralphson/turbopascal#readme",
+  "devDependencies": {},
+  "author": "Mike Ralphson"
 }
