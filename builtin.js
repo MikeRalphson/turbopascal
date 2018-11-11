@@ -2,7 +2,9 @@
 
 'use strict';
 
-define(["Node", "Token", "inst"], function (Node, Token, inst) {
+if (typeof define !== 'function') { var define = require('amdefine')(module) };
+
+define(["./Node", "./Token", "./inst"], function (Node, Token, inst) {
     // Special handling of Random() because its return type depends on whether
     // it has an argument.
     var builtinRandom = function (ctl, t) {

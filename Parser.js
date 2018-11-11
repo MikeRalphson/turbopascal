@@ -2,7 +2,9 @@
 
 'use strict';
 
-define(["Token", "Node", "PascalError", "inst", "SymbolTable", "Symbol", "modules", "RawData"],
+if (typeof define !== 'function') { var define = require('amdefine')(module) };
+
+define(["./Token", "./Node", "./PascalError", "./inst", "./SymbolTable", "./Symbol", "./modules", "./RawData"],
        function (Token, Node, PascalError, inst, SymbolTable, Symbol, modules, RawData) {
 
     var Parser = function (lexer) {

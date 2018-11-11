@@ -1,6 +1,8 @@
 // The mouse sub-system.
 
-define(["Node"], function (Node) {
+if (typeof define !== 'function') { var define = require('amdefine')(module) };
+
+define(["./Node"], function (Node) {
     var gWasInit = false;
     var gX = 0;
     var gY = 0;

@@ -1,6 +1,8 @@
 // The CRT sub-system.
 
-define(["Node"], function (Node) {
+if (typeof define !== 'function') { var define = require('amdefine')(module) };
+
+define(["./Node"], function (Node) {
     var importSymbols = function (symbolTable) {
         // Keyboard functions.
         symbolTable.addNativeFunction("KeyPressed", Node.booleanType, [], function (ctl) {

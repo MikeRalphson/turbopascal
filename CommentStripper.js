@@ -1,6 +1,8 @@
 // A token filter that strips out comment tokens.
 
-define(["Token"], function (Token) {
+if (typeof define !== 'function') { var define = require('amdefine')(module) };
+
+define(["./Token"], function (Token) {
     var CommentStripper = function (lexer) {
         this.lexer = lexer;
     };

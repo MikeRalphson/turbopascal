@@ -1,5 +1,9 @@
 // Exception for parse, compile, and runtime errors.
 
+'use strict';
+
+if (typeof define !== 'function') { var define = require('amdefine')(module) };
+
 define(function () {
     var PascalError = function (token, message) {
         this.token = token;

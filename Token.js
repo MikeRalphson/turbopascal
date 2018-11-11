@@ -1,5 +1,9 @@
 // Token, including a value and type.
 
+if (typeof define !== 'function') {
+    var define = require('amdefine')(module);
+};
+
 define(function () {
     var Token = function (value, tokenType) {
         this.value = value;

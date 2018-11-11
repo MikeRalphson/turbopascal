@@ -5,7 +5,9 @@
 //     http://cs2.uco.edu/~trt/cs4173/pspec.pdf
 //     http://cs2.uco.edu/~trt/cs4933/P-MachineSimulator.pdf
 
-define(["PascalError"], function (PascalError) {
+if (typeof define !== 'function') { var define = require('amdefine')(module) };
+
+define(["./PascalError"], function (PascalError) {
     var OPCODE_BITS = 8;
     var OPERAND1_BITS = 9;
     var OPERAND2_BITS = 15;

@@ -20,7 +20,7 @@ require(["jquery", "Screen", "Keyboard", "IDE"], function ($, Screen, Keyboard, 
         error: function (e) {
             var ide = new IDE(screen, keyboard, []);
             ide.printMenu();
-            ide.screen.printBold("File can't be loaded: " + workFile);
+            ide.screen.printBold("File can't be loaded: files.json");
             ide.screen.newLine();
             ide.printPrompt();
         },

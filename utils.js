@@ -1,5 +1,7 @@
 // Utility functions.
 
+if (typeof define !== 'function') { var define = require('amdefine')(module) };
+
 define({
     // Whether the character is alphabetic.
     isAlpha: function (ch) {

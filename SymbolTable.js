@@ -4,8 +4,10 @@
 
 'use strict';
 
-define(["PascalError", "Symbol", "Node", "Token", "modules",
-       "inst", "Native", "NativeProcedure", "SymbolLookup", "underscore"],
+if (typeof define !== 'function') { var define = require('amdefine')(module) };
+
+define(["./PascalError", "./Symbol", "./Node", "./Token", "./modules",
+       "./inst", "./Native", "./NativeProcedure", "./SymbolLookup", "underscore"],
        function (PascalError, Symbol, Node, Token, modules,
                  inst, Native, NativeProcedure, SymbolLookup, _) {
 

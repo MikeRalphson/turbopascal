@@ -2,7 +2,9 @@
 
 'use strict';
 
-define(["Bytecode", "Node", "inst", "PascalError"],
+if (typeof define !== 'function') { var define = require('amdefine')(module) };
+
+define(["./Bytecode", "./Node", "./inst", "./PascalError"],
        function (Bytecode, Node, inst, PascalError) {
 
     var Compiler = function () {

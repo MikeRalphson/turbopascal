@@ -1,5 +1,7 @@
 // Tracks a list of native functions that can be called from Pascal.
 
+if (typeof define !== 'function') { var define = require('amdefine')(module) };
+
 define(function () {
     var Native = function () {
         // List of NativeProcedure objects. The index within the array is the

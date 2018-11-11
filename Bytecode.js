@@ -1,7 +1,9 @@
 // The bytecode object. Stores all bytecodes for a program, along with accompanying
 // data (such as program constants).
 
-define(["inst", "utils"], function (inst, utils) {
+if (typeof define !== 'function') { var define = require('amdefine')(module) };
+
+define(["./inst", "./utils"], function (inst, utils) {
     var Bytecode = function (native) {
         // Instructions. Array of doubles.
         this.istore = [];

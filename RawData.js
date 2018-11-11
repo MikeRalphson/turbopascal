@@ -1,6 +1,8 @@
 // An object that stores a linear array of raw data (constants) and a parallel
 // array of their simple type codes.
 
+if (typeof define !== 'function') { var define = require('amdefine')(module) };
+
 define(function () {
     var RawData = function () {
         this.length = 0;

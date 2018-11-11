@@ -2,7 +2,9 @@
 
 'use strict';
 
-define(["inst", "PascalError", "utils"], function (inst, PascalError, utils) {
+if (typeof define !== 'function') { var define = require('amdefine')(module) };
+
+define(["./inst", "./PascalError", "./utils"], function (inst, PascalError, utils) {
     var Machine = function (bytecode, keyboard) {
         this.bytecode = bytecode;
         this.keyboard = keyboard;

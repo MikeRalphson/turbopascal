@@ -2,7 +2,9 @@
 
 'use strict';
 
-define(["inst", "PascalError", "Token", "utils"], function (inst, PascalError, Token, utils) {
+if (typeof define !== 'function') { var define = require('amdefine')(module) };
+
+define(["./inst", "./PascalError", "./Token", "./utils"], function (inst, PascalError, Token, utils) {
     var Node = function (nodeType, token, additionalFields) {
         // The type of node (e.g., Node.PROGRAM), see below.
         this.nodeType = nodeType;

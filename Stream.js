@@ -1,6 +1,8 @@
 // Character streamer. Streams characters from the input (a string) one at a
 // time, including peeking. Returns -1 on end of file.
 
+if (typeof define !== 'function') { var define = require('amdefine')(module) };
+
 define(function () {
     var Stream = function (input) {
         this.input = input;

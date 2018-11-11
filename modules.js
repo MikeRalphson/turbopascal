@@ -1,6 +1,8 @@
 // Modules available for import, such as "__builtin__" and "graph".
 
-define(["builtin", "crt", "graph", "mouse", "PascalError"],
+if (typeof define !== 'function') { var define = require('amdefine')(module) };
+
+define(["./builtin", "./crt", "./graph", "./mouse", "./PascalError"],
        function (builtin, crt, graph, mouse, PascalError) {
 
     var importModule = function (name, symbolTable) {

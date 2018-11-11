@@ -1,6 +1,8 @@
 // The graphics sub-system.
 
-define(["Node"], function (Node) {
+if (typeof define !== 'function') { var define = require('amdefine')(module) };
+
+define(["./Node"], function (Node) {
     var $canvas;
     var gCtx;
     var gGraphResult = 0;

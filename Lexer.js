@@ -1,6 +1,10 @@
 // Lexer, returning tokens, including peeking.
 
-define(["utils", "Token", "PascalError"], function (utils, Token, PascalError) {
+'use strict';
+
+if (typeof define !== 'function') { var define = require('amdefine')(module) };
+
+define(["./utils", "./Token", "./PascalError"], function (utils, Token, PascalError) {
     // Whether to print tokens as they're read.
     var PRINT_TOKENS = false;
 

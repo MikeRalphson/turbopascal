@@ -1,5 +1,7 @@
 // Object to interface with the keyboard.
 
+if (typeof define !== 'function') { var define = require('amdefine')(module) };
+
 define(["jquery"], function ($) {
     var Keyboard = function () {
         // Listener for new keys in the queue.
