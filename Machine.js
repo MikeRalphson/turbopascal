@@ -5,9 +5,10 @@
 if (typeof define !== 'function') { var define = require('amdefine')(module) };
 
 define(["./inst", "./PascalError", "./utils"], function (inst, PascalError, utils) {
-    var Machine = function (bytecode, keyboard) {
+    var Machine = function (bytecode, keyboard, ansi) {
         this.bytecode = bytecode;
         this.keyboard = keyboard;
+        this.ansi = ansi; // optional
 
         // Time that the program was started, in ms since epoch.
         this.startTime = 0;
@@ -88,6 +89,12 @@ define(["./inst", "./PascalError", "./utils"], function (inst, PascalError, util
                     self.outputCallback(line);
                 }
             },
+            write: function (line) {
+                if (self.outchCallback !== null) {
+                    self.outchCallback(line);
+                }
+            },
+            // Read a line from the user. The parameter is a function that
             // Read a line from the user. The parameter is a function that
             // will be called with the line. The machine must first be suspended.
             readln: function (callback) {
@@ -132,6 +139,9 @@ define(["./inst", "./PascalError", "./utils"], function (inst, PascalError, util
                 } else {
                     return 0;
                 }
+            },
+            ansi: function() {
+                return self.ansi
             }
         };
     };
@@ -217,6 +227,9 @@ define(["./inst", "./PascalError", "./utils"], function (inst, PascalError, util
     // write.
     Machine.prototype.setOutputCallback = function (outputCallback) {
         this.outputCallback = outputCallback;
+    };
+    Machine.prototype.setOutChCallback = function (outputCallback) {
+        this.outchCallback = outputCallback;
     };
 
     // Set a callback for standard input. The callback is called with a function

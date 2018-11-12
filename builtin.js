@@ -76,6 +76,15 @@ define(["./Node", "./Token", "./inst"], function (Node, Token, inst) {
                 ctl.writeDstore(v, ctl.readDstore(v) + 1);
             });
             symbol.type.parameters[0].byReference = true;
+            symbolTable.addNativeFunction("Write", Node.voidType, [], function (ctl) {
+                // Skip ctl parameter.
+                var elements = [];
+                for (var i = 1; i < arguments.length; i++) {
+                    // Convert to string.
+                    elements.push("" + arguments[i]);
+                }
+                ctl.write(elements.join(" "));
+            });
             symbolTable.addNativeFunction("WriteLn", Node.voidType, [], function (ctl) {
                 // Skip ctl parameter.
                 var elements = [];

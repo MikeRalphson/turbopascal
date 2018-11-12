@@ -10,6 +10,7 @@ const PascalError = require('./PascalError.js');
 const Stream = require('./Stream.js');
 const Compiler = require('./Compiler.js');
 const Machine = require('./Machine.js');
+const ansi = require('ansi');
 
 function compile(source, run, DEBUG_TRACE) {
     let self = this;
@@ -42,7 +43,7 @@ function compile(source, run, DEBUG_TRACE) {
 
         if (run) {
             // Execute the bytecode.
-            let machine = new Machine(bytecode, this.keyboard);
+            let machine = new Machine(bytecode, this.keyboard, ansi);
             if (DEBUG_TRACE) {
                 machine.setDebugCallback(function (state) {
                     $state.append(state + "\n");
@@ -52,6 +53,9 @@ function compile(source, run, DEBUG_TRACE) {
             });
             machine.setOutputCallback(function (line) {
                 console.log(line);
+            });
+            machine.setOutChCallback(function (line) {
+                process.stdout.write(line);
             });
             machine.setInputCallback(function (callback) {
                 self.screen.addCursor();
