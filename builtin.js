@@ -83,7 +83,7 @@ define(["./Node", "./Token", "./inst"], function (Node, Token, inst) {
                     // Convert to string.
                     elements.push("" + arguments[i]);
                 }
-                ctl.write(elements.join(" "));
+                ctl.write(elements.join("")); // was " "
             });
             symbolTable.addNativeFunction("WriteLn", Node.voidType, [], function (ctl) {
                 // Skip ctl parameter.
@@ -92,7 +92,7 @@ define(["./Node", "./Token", "./inst"], function (Node, Token, inst) {
                     // Convert to string.
                     elements.push("" + arguments[i]);
                 }
-                ctl.writeln(elements.join(" "));
+                ctl.writeln(elements.join("")); // was " "
             });
             symbolTable.addNativeFunction("ReadLn", Node.stringType, [], function (ctl) {
                 // Suspend the machine so that the browser can get keys to us.
