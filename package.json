@@ -1,6 +1,6 @@
 {
   "name": "turbopascal",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Turbo Pascal subset compiler and interpreter",
   "main": "tpc.js",
   "bin": {
