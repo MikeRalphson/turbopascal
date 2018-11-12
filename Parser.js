@@ -210,7 +210,7 @@ define(["./Token", "./Node", "./PascalError", "./inst", "./SymbolTable", "./Symb
                 // Typed constant.
                 var rawData;
 
-                // XXX We need to verify type compatibility throughout here.
+                // TODO We need to verify type compatibility throughout here.
                 if (type.nodeType === Node.ARRAY_TYPE) {
                     rawData = this._parseArrayConstant(symbolTable, type);
                 } else if (type.nodeType === Node.RECORD_TYPE) {

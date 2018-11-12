@@ -776,14 +776,14 @@ define(["./inst", "./PascalError", "./Token", "./utils"], function (inst, Pascal
                     } else if (type.typeName.isSameIdentifier(nodeType.typeName)) {
                         // Same pointer type.
                     } else {
-                        // Incompatible pointers, disallow. XXX test this.
+                        // Incompatible pointers, disallow. TODO test this.
                         throw new PascalError(this.token, "can't cast from pointer to " +
                                               nodeType.print() + " to pointer to " + type.print());
                     }
                 }
             }
         } else {
-            // Complex type. XXX We should verify that they're of the same type.
+            // Complex type. TODO We should verify that they're of the same type.
         }
 
         // Nothing to cast, return existing node.

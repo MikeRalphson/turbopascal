@@ -213,7 +213,7 @@ define(["./Node"], function (Node) {
                 gGraphResult = grNoInitGraph;
             }
             gMustClearDevice = true;
-            // XXX Should write mode into the second parameter.
+            // TODO Should write mode into the second parameter.
         });
         symbolTable.addNativeFunction("GraphResult", Node.integerType, [], function (ctl) {
             // The result of a graphics call.
