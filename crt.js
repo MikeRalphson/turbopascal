@@ -22,6 +22,11 @@ define(["./Node"], function (Node) {
         });
 
 	symbolTable.addNativeVariable("CheckSnow", false, Node.booleanType);
+
+        symbolTable.addNativeFunction("Window", Node.voidType, [Node.integerType, Node.integerType, Node.integerType, Node.integerType], function (ctl, x1, y1, x2, y2) {
+            // Not implemented.
+        });
+
     };
 
     return {
