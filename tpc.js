@@ -10,7 +10,7 @@ const PascalError = require('./PascalError.js');
 const Stream = require('./Stream.js');
 const Compiler = require('./Compiler.js');
 const Machine = require('./Machine.js');
-const ansi = require('ansi');
+const ansi = require('ansi')(process.stdout);
 
 function compile(source, run, DEBUG_TRACE) {
     let self = this;

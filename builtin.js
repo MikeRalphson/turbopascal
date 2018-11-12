@@ -147,6 +147,8 @@ define(["./Node", "./Token", "./inst"], function (Node, Token, inst) {
 		return p.getTypeSize();
             });
             symbol.type.parameters[0].byReference = true;
+            symbolTable.addNativeFunction("Chr", Node.charType, [Node.integerType],
+                        function (ctl, i) { return String.fromCharCode(i); });
         }
     };
 });

@@ -29,13 +29,16 @@ define(["./Node"], function (Node) {
             // Not implemented.
         });
 
+        symbolTable.addNativeFunction("NormVideo", Node.voidType, [], function (ctl) {
+            // Not implemented.
+        });
+
         symbolTable.addNativeFunction("Window", Node.voidType, [Node.integerType, Node.integerType, Node.integerType, Node.integerType], function (ctl, x1, y1, x2, y2) {
             // Not implemented.
         });
 
         symbolTable.addNativeFunction("GotoXY", Node.voidType, [Node.integerType, Node.integerType], function (ctl, x, y) {
 	    ctl.ansi().goto(x, y);
-            // Not implemented.
         });
 
     };
