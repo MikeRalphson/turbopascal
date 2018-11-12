@@ -131,6 +131,20 @@ define(["./Node", "./Token", "./inst"], function (Node, Token, inst) {
             symbol.type.parameters[2].byReference = true;
             symbol.type.parameters[3].byReference = true;
 
+            symbol = symbolTable.addNativeFunction("GetDate", Node.voidType, [Node.integerType,
+                Node.integerType, Node.integerType, Node.integerType, Node.integerType],
+                                          function (ctl, year, mon, day, dow) {
+                let now = new Date();
+                year = now.getYear();
+                mon  = now.getMonth();
+                day  = now.getDay();
+                dow  = now.getDOW;
+            });
+            symbol.type.parameters[0].byReference = true;
+            symbol.type.parameters[1].byReference = true;
+            symbol.type.parameters[2].byReference = true;
+            symbol.type.parameters[3].byReference = true;
+
             symbol = symbolTable.addNativeFunction("New", Node.voidType,
                                           [Node.pointerType, Node.integerType],
                                           function (ctl, p, size) {
