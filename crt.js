@@ -23,9 +23,15 @@ define(["./Node"], function (Node) {
 
 	symbolTable.addNativeVariable("CheckSnow", false, Node.booleanType);
 
+	symbolTable.addNativeVariable("DirectVideo", false, Node.booleanType);
+
 	symbolTable.addNativeVariable("TextAttr", 7, Node.integerType);
 
         symbolTable.addNativeFunction("ClrScr", Node.voidType, [], function (ctl) {
+            // Not implemented.
+        });
+
+        symbolTable.addNativeFunction("ClrEOL", Node.voidType, [], function (ctl) {
             // Not implemented.
         });
 
