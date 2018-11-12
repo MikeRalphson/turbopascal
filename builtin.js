@@ -116,6 +116,21 @@ define(["./Node", "./Token", "./inst"], function (Node, Token, inst) {
                 // Tell VM to delay by ms asynchronously.
                 ctl.delay(ms);
             });
+
+            symbol = symbolTable.addNativeFunction("GetTime", Node.voidType, [Node.integerType,
+                Node.integerType, Node.integerType, Node.integerType, Node.integerType],
+                                          function (ctl, hour, min, sec, hun) {
+                let now = new Date();
+                hour = now.getHours();
+                min  = now.getMinutes();
+                sec  = now.getSeconds();
+                hun  = now.getMilliseconds()/10.0;
+            });
+            symbol.type.parameters[0].byReference = true;
+            symbol.type.parameters[1].byReference = true;
+            symbol.type.parameters[2].byReference = true;
+            symbol.type.parameters[3].byReference = true;
+
             symbol = symbolTable.addNativeFunction("New", Node.voidType,
                                           [Node.pointerType, Node.integerType],
                                           function (ctl, p, size) {
