@@ -260,7 +260,6 @@ define(["./Token", "./Node", "./PascalError", "./inst", "./SymbolTable", "./Symb
 
             var low = type.ranges[d].getRangeLowBound();
             var high = type.ranges[d].getRangeHighBound();
-            console.warn('Range',low,high);
             for (var i = low; i <= high; i++) {
                 if (d === type.ranges.length - 1) {
                     // Parse the next constant.
@@ -833,14 +832,13 @@ define(["./Token", "./Node", "./PascalError", "./inst", "./SymbolTable", "./Symb
             var entries = [];
             do {
                 var entry = this._expectIdentifier("expected enumeration entry");
-                console.log('Defining enum value',entry.value,entries.length);
+                //console.warn('Defining enum value',entry.value,entries.length);
                 var eNode = new Node(Node.CONST, entry, {
                     name: entry.value,
                     type: inst.I,
                     value: entries.length,
                     symbolTable: symbolTable // mike
                 });
-                //symbolTable.addSymbol(entry.value,eNode.nodeType, eNode.type);
 		symbolTable.addNativeConstant(entry.value, entries.length, Node.integerType);
                 entries.push(entry);
             } while (this._moreToCome(",", ")"));
@@ -851,7 +849,7 @@ define(["./Token", "./Node", "./PascalError", "./inst", "./SymbolTable", "./Symb
                 type: type,
                 entries: entries
             });
-            console.log('Defining enum length',parentName,entries.length);
+            //console.warn('Defining enum length',parentName,entries.length);
             symbolTable.addNativeConstant(parentName, entries.length, Node.integerType);
         } else {
             throw new PascalError(token, "can't parse type");
@@ -936,12 +934,12 @@ define(["./Token", "./Node", "./PascalError", "./inst", "./SymbolTable", "./Symb
         var next = this.lexer.peek();
         if (next.value === "..") {
 	    var token = this.lexer.next();
-            //var token = this._expectSymbol("..");
             var high = this._parseExpression(symbolTable);
         }
         else {
             var high = low;
-            low = {getNumber: function() { return 0 }, value: 0};
+            var lToken = new Token(0, Token.NUMBER);
+            low = new Node(Node.NUMBER, lToken);
         }
 
         return new Node(Node.RANGE, token, {low: low, high: high});

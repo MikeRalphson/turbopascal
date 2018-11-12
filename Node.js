@@ -292,7 +292,7 @@ define(["./inst", "./PascalError", "./Token", "./utils"], function (inst, Pascal
                 return this.low.getNumber();
             }
             catch (ex) {
-                console.warn(JSON.stringify(this.low));
+                //console.warn('Low ',JSON.stringify(this.low));
                 return this.low.token.value;
             }
         } else {
@@ -307,7 +307,7 @@ define(["./inst", "./PascalError", "./Token", "./utils"], function (inst, Pascal
                 return this.high.getNumber();
             }
             catch (ex) {
-                console.warn(JSON.stringify(this.high));
+                //console.warn('High',JSON.stringify(this.high));
                 return this.high.token.value;
             }
         } else {

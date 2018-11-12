@@ -135,7 +135,7 @@ define(["./Node", "./Token", "./inst"], function (Node, Token, inst) {
             symbol = symbolTable.addNativeFunction("SizeOf", Node.integerType,
                                           [Node.recordType],
                                           function (ctl, p) {
-		return 1; // TODO
+		return p.getTypeSize();
             });
             symbol.type.parameters[0].byReference = true;
         }
