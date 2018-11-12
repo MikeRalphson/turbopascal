@@ -20,6 +20,8 @@ define(["./Node"], function (Node) {
         symbolTable.addNativeFunction("NoSound", Node.voidType, [], function (ctl) {
             // Not implemented.
         });
+
+	symbolTable.addNativeVariable("CheckSnow", false, Node.booleanType);
     };
 
     return {

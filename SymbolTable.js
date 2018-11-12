@@ -149,6 +149,26 @@ define(["./PascalError", "./Symbol", "./Node", "./Token", "./modules",
         symbol.value = valueNode;
     };
 
+    // Add a native variable to the symbol table.
+    SymbolTable.prototype.addNativeVariable = function (name, value, type) {
+        var valueNode;
+        switch (type.getSimpleTypeCode()) {
+            case inst.A:
+                valueNode = Node.makePointerNode(value);
+                break;
+            case inst.B:
+                valueNode = Node.makeBooleanNode(value);
+                break;
+            default:
+                valueNode = Node.makeNumberNode(value);
+                break;
+        }
+        valueNode.expressionType = type;
+
+        var symbol = this.addSymbol(name, Node.VAR, type);
+        symbol.value = valueNode;
+    };
+
     // Add a native function to the symbol table.
     SymbolTable.prototype.addNativeFunction = function (name, returnType, parameterTypes, fn) {
         // Add to table of builtins first (for CSP call).
