@@ -71,11 +71,22 @@ define(["./Node", "./Token", "./inst"], function (Node, Token, inst) {
                 ctl.writeDstore(v, ctl.readDstore(v) + dv);
             });
             symbol.type.parameters[0].byReference = true;
+
             var symbol = symbolTable.addNativeFunction("Succ", Node.integerType,
                 [Node.integerType], function (ctl, v) {
                 ctl.writeDstore(v, ctl.readDstore(v) + 1);
             });
-            symbol.type.parameters[0].byReference = true;
+
+            var symbol = symbolTable.addNativeFunction("Pred", Node.integerType,
+                [Node.integerType], function (ctl, v) {
+                ctl.writeDstore(v, ctl.readDstore(v) - 1);
+            });
+
+            var symbol = symbolTable.addNativeFunction("UpCase", Node.charType,
+                [Node.charType], function (ctl, v) {
+                ctl.writeDstore(v, ctl.readDstore(v).toUpperCase());
+            });
+
             symbolTable.addNativeFunction("Write", Node.voidType, [], function (ctl) {
                 // Skip ctl parameter.
                 var elements = [];
