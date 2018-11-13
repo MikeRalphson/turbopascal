@@ -1,5 +1,5 @@
 {$A+,B-,D+,E-,F-,I-,L+,N-,O-,R-,S+,V-}
-{$M 5120,0,655360}
+{$M 16384,0,655360}
 program blakjack;
 
 uses crt;

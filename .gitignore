@@ -1,3 +1,8 @@
 node_modules/
 *.P
 *.p
+fp.cfg
+src/bin/
+src/*.pas
+src/*.bak
+src/fp__*
